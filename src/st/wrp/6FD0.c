@@ -2519,7 +2519,7 @@ const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
 // *** bss? section start ***
 extern LayoutObject* D_80193AB0;
 extern LayoutObject* D_80193AB4;
-extern s8 D_80193AB8;
+extern u8 D_80193AB8;
 extern s8 D_80193ABC;
 extern u16 D_80194728[];
 // *** bss? section end ***
@@ -2850,8 +2850,9 @@ loop_1:
     }
 }
 
+void func_8018A170(s32);
+// https://decomp.me/scratch/MvBMN (see scratch family)
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A170);
-void func_8018A170(s16);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
 void func_8018A26C(s16);
