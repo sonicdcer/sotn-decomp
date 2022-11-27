@@ -3317,22 +3317,17 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else
 void func_8018CAB0(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = D_8006C3B8;
-    if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84.value;
-        entity->unk84.value = temp_v1;
-        entity->accelerationX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88 = -entity->unk88;
+    if (D_8006C3B8->accelerationY >= 0) {
+        D_8006C3B8->unk84.value += D_8006C3B8->unk88;
+        D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
+        if (D_8006C3B8->accelerationX == 0x10000 ||
+            D_8006C3B8->accelerationX == -0x10000) {
+            D_8006C3B8->unk88 = -D_8006C3B8->unk88;
         }
-        entity = D_8006C3B8;
     }
 
-    if (entity->accelerationY < 0x00004000) {
-        entity->accelerationY += 0x2000;
+    if (D_8006C3B8->accelerationY < 0x4000) {
+        D_8006C3B8->accelerationY += 0x2000;
     }
 }
 #endif
