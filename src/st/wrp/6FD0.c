@@ -3509,7 +3509,38 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0D);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
+void func_8018F510(Entity* entity) {
+    Entity* temp_v0_2;
+    u8 temp_v0;
+
+    switch (entity->initState)
+    {
+    case 0:
+        InitializeEntity(&D_8018047C);
+        entity->unk8C = entity->unk80.entityPtr->objectId;
+
+    case 1:
+        temp_v0 = entity->unk7C.modeU8.unk0;
+        entity->unk7C.modeU8.unk0++;
+
+        if (temp_v0 >= 5) {
+            temp_v0_2 = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (temp_v0_2 != NULL) {
+                func_8018A8D4(2, entity, temp_v0_2);
+                temp_v0_2->objectId = 2;
+                temp_v0_2->pfnUpdate = EntityExplosion;
+                temp_v0_2->subId = entity->subId;
+            }
+            entity->unk7C.modeU8.unk0 = 0;
+        }
+        entity->posX.Data.high = entity->unk80.entityPtr->posX.Data.high;
+        entity->posY.Data.high = entity->unk80.entityPtr->posY.Data.high;
+
+        if (entity->unk80.entityPtr->objectId != entity->unk8C) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
