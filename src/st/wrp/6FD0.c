@@ -2928,7 +2928,7 @@ void LoadObjLayout(s32 objLayoutId) {
         s16 var_a1;
         u16* temp_v1;
 
-        = pObjLayoutStart + 1;
+        pObjLayoutStart++;
         var_a0 = Random() & 0xFF;
 
         for (var_a1 = 0;; var_a1++) {
