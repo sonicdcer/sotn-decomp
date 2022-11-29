@@ -3513,8 +3513,7 @@ void func_8018F510(Entity* entity) {
     Entity* temp_v0_2;
     u8 temp_v0;
 
-    switch (entity->initState)
-    {
+    switch (entity->initState) {
     case 0:
         InitializeEntity(&D_8018047C);
         entity->unk8C = entity->unk80.entityPtr->objectId;
