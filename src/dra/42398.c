@@ -1,7 +1,7 @@
 /*
  * File: 42398.c
- * Overlay: RIC
- * Description: Overlay for the character Richter.
+ * Overlay: DRA
+ * Description: Game engine.
  */
 
 #include "common.h"
@@ -922,7 +922,7 @@ s32 func_800E9508(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
+u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
 s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
                   s32 fd) {
@@ -4806,7 +4806,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B5A4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BBE0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BD48);
+bool func_8011BD48(Entity* entity) {
+    s32 i = 0x10;
+    s16 objId = entity->objectId;
+    s16 subId = entity->subId;
+    Entity* e = &g_EntityArray[i];
+    for (; i < 0x40; i++, e++) {
+        if (objId == e->objectId && subId == e->subId && e != entity) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BDA4);
 
