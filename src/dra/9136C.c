@@ -60,8 +60,7 @@ void func_8013136C(Entity* entity) {
         break;
 
     case 2:
-        switch (D_800B0914)
-        {
+        switch (D_800B0914) {
         case 1:
             break;
 
@@ -86,7 +85,6 @@ void func_8013136C(Entity* entity) {
             break;
         }
         break;
-
     }
     entity->palette = PLAYER.palette;
     func_8012C600();

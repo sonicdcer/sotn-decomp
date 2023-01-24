@@ -2643,4 +2643,3 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80130E94);
 
 // https://decomp.me/scratch/d9hfG TODO: jumptable splat
 // INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8013136C);
-
