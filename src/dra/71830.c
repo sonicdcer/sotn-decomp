@@ -25,13 +25,8 @@ void func_80111830(void) {
             var_v0 = func_80111018();
             break;
         case 6:
-            var_v0 = func_801112AC();
             break;
         case 9:
-            var_v0 = func_8011151C();
-            break;
-        case 14:
-            var_v0 = func_80110BC8();
             break;
         case 15:
             var_v0 = func_80110968();
@@ -48,7 +43,7 @@ void func_80111830(void) {
             break;
         }
         if (var_v0 != 0) {
-            return;   
+            return;
         }
     }
 }
