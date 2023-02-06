@@ -1557,5 +1557,3 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80111018);
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801112AC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011151C);
-
-
