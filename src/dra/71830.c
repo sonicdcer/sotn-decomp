@@ -3,32 +3,12 @@
 #include "objects.h"
 #include "sfx.h"
 
-/**
- * This function is not supported by mips2c.
- * AngheloAlf edited the assembly for mips2c support
- * and this is just an attempt of it.
- * The patched asm can be found here:
- * https://discord.com/channels/710646040331681844/815529862604390411/1069793275810156636
- */
-#ifdef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_80111830);
-#else
-s32 func_801104D0();                                /* extern */
-s32 func_801106A4();                                /* extern */
-s32 func_8011081C();                                /* extern */
-s32 func_80110968();                                /* extern */
-s32 func_80110BC8();                                /* extern */
-s32 func_80110DF8();                                /* extern */
-s32 func_80111018();                                /* extern */
-s32 func_801112AC();                                /* extern */
-s32 func_8011151C();                                /* extern */
-
 void func_80111830(void) {
     s32 var_v0;
-    s32 var_s0;
+    s32 i;
 
-    for ( var_s0 = 0; var_s0 < 16; var_s0++) {
-        switch (var_s0) {
+    for (i = 0; i < 16; i++) {
+        switch (i) {
         case 0:
             var_v0 = func_801104D0();
             break;
@@ -72,7 +52,6 @@ void func_80111830(void) {
         }
     }
 }
-#endif
 
 void func_80111928(void) { D_801396EA = 0; }
 
