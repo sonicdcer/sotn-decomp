@@ -149,7 +149,7 @@ void func_8015B348(void) {
             PLAYER.palette = 0x8120;
             func_801606BC(g_CurrentEntity, 0x1C, 0);
         }
-        
+
         D_801545A8--;
         if (D_801545A8 == 0) {
             func_8015C920(&D_801558D4);
