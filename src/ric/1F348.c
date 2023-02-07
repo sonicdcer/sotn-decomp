@@ -96,7 +96,7 @@ void func_8015B348(void) {
             g_CurrentEntity->accelerationY = -0x10000;
             func_801606BC(g_CurrentEntity, 0x16, 0);
             D_801545A8 = 0x30;
-            g_api.PlaySfx(0x6E2);
+            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
             D_80174F78 = 0xA0;
             PLAYER.unk2E++;
         }
@@ -149,7 +149,7 @@ void func_8015B348(void) {
             PLAYER.palette = 0x8120;
             func_801606BC(g_CurrentEntity, 0x1C, 0);
         }
-        
+
         D_801545A8--;
         if (D_801545A8 == 0) {
             func_8015C920(&D_801558D4);
