@@ -1,6 +1,5 @@
 #include "nz0.h"
 
-
 // DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/O9yG0
 // INCLUDE_ASM("asm/us/st/nz0/nonmatchings/47958", EntityBloodSkeleton);
 extern u16 D_80180C40;
@@ -19,20 +18,23 @@ typedef struct test {
 extern test* D_8003C808;
 
 u8 func_801C070C(void*, s32);
+
+// INCLUDE_ASM("asm/us/st/nz0/nonmatchings/47958", EntityBloodSkeleton);
 void EntityBloodSkeleton(Entity* self) {
+    int new_var3;
     const char* animation;
     test* temp;
-
+    int new_var4;
     if ((self->flags & 0x100) && (self->step < 3)) {
         func_801C29B0(0x6CB);
         self->unk3C = 0;
         func_801BD52C(3);
     }
-
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180C40);
-        self->facing = Random() % 2;
+        new_var3 = ((unsigned char)Random()) % 2;
+        self->facing = new_var3;
         self->animCurFrame = 1;
         self->flags &= 0x1FFFFFFF;
         self->palette += self->subId;
@@ -53,10 +55,10 @@ void EntityBloodSkeleton(Entity* self) {
                 self->posX.i.hi -= D_80182624[self->animFrameIdx];
             }
         }
-        
-        if ((AnimateEntity(&D_80182610, self) == 0) &&
-            (func_801BCC28() < 0x30) && (Random() % 4 ) == 0) {
-            self->facing = func_801BCC5C() % 2 == 0;
+        if (((AnimateEntity(&D_80182610, self) == 0) &&
+             (func_801BCC28() < 0x30)) &&
+            ((Random() % 4) == 0)) {
+            self->facing = (func_801BCC5C() % 2) == 0;
         }
         if (func_801C070C(&D_801826AC, self->facing) != 2) {
             self->facing ^= 1;
@@ -77,7 +79,7 @@ void EntityBloodSkeleton(Entity* self) {
     case 4:
         switch (self->unk2E) {
         case 0:
-            if (--self->unk80.modeS16.unk0 == 0) {
+            if ((--self->unk80.modeS16.unk0) == 0) {
                 self->unk1E = 0;
                 self->unk19 |= 4;
                 func_801C29B0(0x6CC);
@@ -89,13 +91,12 @@ void EntityBloodSkeleton(Entity* self) {
         case 1:
             if ((g_blinkTimer % 3) == 0) {
                 self->unk80.modeS16.unk0++;
-                if (self->unk80.modeS16.unk0 % 2 != 0) {
+                if ((self->unk80.modeS16.unk0 % 2) != 0) {
                     self->unk1E = 0x10;
                 } else {
                     self->unk1E = -0x10;
                 }
             }
-
             if (self->unk80.modeS16.unk0 >= 9) {
                 self->unk19 = 0;
                 self->unk1E = 0;
@@ -109,15 +110,19 @@ void EntityBloodSkeleton(Entity* self) {
             } else {
                 animation = &D_80182670;
             }
-
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
-                self->unk3C = 3;
-                //temp = D_8003C808;
-                self->flags = D_8003C808->unkb14 & 0x1FFFFFFF;
-                func_801BD52C(2);
+        do
+        {
+          self->unk3C = 3;
+        }
+        while (0);
+        new_var4 = 0x1FFFFFFF;
+        self->flags = D_8003C808->unkb14 & new_var4;
+        func_801BD52C(2);
             }
         }
+
         break;
     }
 }
