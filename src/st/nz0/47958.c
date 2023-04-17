@@ -112,14 +112,12 @@ void EntityBloodSkeleton(Entity* self) {
             }
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
-        do
-        {
-          self->unk3C = 3;
-        }
-        while (0);
-        new_var4 = 0x1FFFFFFF;
-        self->flags = D_8003C808->unkb14 & new_var4;
-        func_801BD52C(2);
+                do {
+                    self->unk3C = 3;
+                } while (0);
+                new_var4 = 0x1FFFFFFF;
+                self->flags = D_8003C808->unkb14 & new_var4;
+                func_801BD52C(2);
             }
         }
 
