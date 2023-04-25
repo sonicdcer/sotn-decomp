@@ -1,9 +1,12 @@
 #include "lib.h"
 
+// duplicate
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801ADED0);
 
+// duplicate
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801ADF98);
 
+// 0.958 - ('NZ0', 'func_801B0AA4')
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AE01C);
 
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AE4BC);
@@ -14,8 +17,10 @@ INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AE84C);
 
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AE8E8);
 
+// 0.946 - ('LIB', 'func_801AF538')
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AF280);
 
+// 0.946 - ('LIB', 'func_801AF280')
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AF538);
 
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801AF7B8);
