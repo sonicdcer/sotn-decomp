@@ -85,7 +85,7 @@ define link
 endef
 
 all: build check
-build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000 lib
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/
@@ -126,6 +126,10 @@ $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
+
+lib: stlib_dirs $(BUILD_DIR)/LIB.BIN
+$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
+	$(OBJCOPY) -O binary $< $@
 
 cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
@@ -223,7 +227,7 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000 extract_stlib
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: $(SPLAT_APP)
@@ -277,6 +281,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
@@ -356,7 +361,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean, format, check, expected
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
+.PHONY: main, dra, ric, cen, dre, lib, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: require-tools,update-dependencies
