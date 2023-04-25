@@ -40,6 +40,7 @@ def read_roms():
     roms["WRP"] = read_binary("WRP.BIN")
     roms["RWRP"] = read_binary("RWRP.BIN")
     roms["TT_000"] = read_binary("TT_000.BIN")
+    roms["LIB"] = read_binary("LIB.BIN")
     return roms
 
 
