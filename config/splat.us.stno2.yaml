@@ -112,8 +112,4 @@ segments:
       - [0x32A80, rodata]
       - [0x32D90, rodata]
       - [0x334D0, c]
-      - [0x4D558, c] #unk instructions
-      - [0x4D940, c] 
-      - [0x4DDF4, c]
-      - [0x4EB08, c]
   - [0x4FDBC]

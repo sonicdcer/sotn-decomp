@@ -355,3 +355,29 @@ INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CC198);
 INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CC360);
 
 INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CD1D8);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CD558);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CD940);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDA90);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDAC0);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDB3C);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDBC4);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDCA4);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDCF8);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDD24);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDD88);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CDDF4);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CEB08);
+
+INCLUDE_ASM("config/../asm/us/st/no2/nonmatchings/334D0", func_801CEBDC);
