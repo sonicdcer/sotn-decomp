@@ -1,0 +1,119 @@
+options:
+  disasm_unknown: yes
+  platform:     psx
+  basename:     stno2
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/ST/NO2/NO2.BIN
+  asm_path:     asm/us/st/no2
+  asset_path:   assets/st/no2
+  src_path:     src/st/no2
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.stno2.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno2.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stno2.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".rodata"
+    - ".text"
+    - ".data"
+segments:
+  - name: stno2
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+      - [0x0, rodata]
+      - [0x1C70, rodata]
+      - [0x1C90, rodata]
+      - [0x1ED0, rodata]
+      - [0x1EE0, rodata]
+      - [0x24C0, rodata]
+      - [0x2520, rodata]
+      - [0x27C0, rodata]
+      - [0x2850, rodata]
+      - [0x30C0, rodata]
+      - [0x3270, rodata]
+      - [0x32A0, rodata]
+      - [0x3B00, rodata]
+      - [0x3B20, rodata]
+      - [0x3B70, rodata]
+      - [0x3BC0, rodata]
+      - [0x3CB0, rodata]
+      - [0x3D00, rodata]
+      - [0x3D50, rodata]
+      - [0x4200, rodata]
+      - [0x2C8B0, rodata]
+      - [0x2C940, rodata]
+      - [0x2CAA0, rodata]
+      - [0x2CC40, rodata]
+      - [0x2CCD0, rodata]
+      - [0x2CD60, rodata]
+      - [0x2CE90, rodata]
+      - [0x2D060, rodata]
+      - [0x2D440, rodata]
+      - [0x2D650, rodata]
+      - [0x2D6E0, rodata]
+      - [0x2D780, rodata]
+      - [0x2D7F0, rodata]
+      - [0x2D860, rodata]
+      - [0x2D8D0, rodata]
+      - [0x2D940, rodata]
+      - [0x2D9B0, rodata]
+      - [0x2DB00, rodata]
+      - [0x2DC70, rodata]
+      - [0x2DF80, rodata]
+      - [0x2E150, rodata]
+      - [0x2E4D0, rodata]
+      - [0x2E6E0, rodata]
+      - [0x2E960, rodata]
+      - [0x2EA00, rodata]
+      - [0x2F390, rodata]
+      - [0x2F6D0, rodata]
+      - [0x2F830, rodata]
+      - [0x2F8A0, rodata]
+      - [0x2F910, rodata]
+      - [0x2F980, rodata]
+      - [0x2FA10, rodata]
+      - [0x2FB80, rodata]
+      - [0x2FDC0, rodata]
+      - [0x2FF30, rodata]
+      - [0x30210, rodata]
+      - [0x30490, rodata]
+      - [0x30560, rodata]
+      - [0x306C0, rodata]
+      - [0x30890, rodata]
+      - [0x30D90, rodata]
+      - [0x31010, rodata]
+      - [0x31250, rodata]
+      - [0x312C0, rodata]
+      - [0x31330, rodata]
+      - [0x313E0, rodata]
+      - [0x31450, rodata]
+      - [0x314E0, rodata]
+      - [0x31550, rodata]
+      - [0x315C0, rodata]
+      - [0x32280, rodata]
+      - [0x322F0, rodata]
+      - [0x32360, rodata]
+      - [0x323D0, rodata]
+      - [0x32480, rodata]
+      - [0x324F0, rodata]
+      - [0x32560, rodata]
+      - [0x325D0, rodata]
+      - [0x32670, rodata]
+      - [0x32810, rodata]
+      - [0x32880, rodata]
+      - [0x328F0, rodata]
+      - [0x32960, rodata]
+      - [0x32A80, rodata]
+      - [0x32D90, rodata]
+      - [0x334D0, c]
+      - [0x4D558, c] #unk instructions
+      - [0x4D940, c] 
+      - [0x4DDF4, c]
+      - [0x4EB08, c]
+  - [0x4FDBC]
