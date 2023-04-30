@@ -1,0 +1,34 @@
+options:
+  platform:     psx
+  basename:     stno0
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/ST/NO0/NO0.BIN
+  asm_path:     asm/us/st/no0
+  asset_path:   assets/st/no0
+  src_path:     src/st/no0
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.stno0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno0.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stno0.txt
+  disasm_unknown: no
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+segments:
+  - name: stno0
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+    - [0x0, data]
+    - [0x41368, rodata]
+    - [0x41854, c]
+    - [0x5E8CC, sbss]
+  - [0x5F58C]
