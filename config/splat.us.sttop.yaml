@@ -1,0 +1,32 @@
+options:
+  platform:     psx
+  basename:     sttop
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/ST/TOP/TOP.BIN
+  asm_path:     asm/us/st/top
+  asset_path:   assets/st/top
+  src_path:     src/st/top
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.sttop.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.sttop.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.sttop.txt
+  disasm_unknown: no
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+segments:
+  - name: sttop
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+    - [0x0, rodata]
+    - [0x28CF8, c]
+  - [0x3C55B]
