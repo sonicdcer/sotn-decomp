@@ -185,7 +185,7 @@ $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
 
-no2: sttop_dirs $(BUILD_DIR)/TOP.BIN
+top: sttop_dirs $(BUILD_DIR)/TOP.BIN
 $(BUILD_DIR)/TOP.BIN: $(BUILD_DIR)/sttop.elf
 	$(OBJCOPY) -O binary $< $@
 
