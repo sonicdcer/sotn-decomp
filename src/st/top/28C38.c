@@ -259,14 +259,14 @@ INCLUDE_ASM("config/../asm/us/st/top/nonmatchings/28C38", func_801B95C4);
 
 // assembler skips a nop
 // matching in decompme: https://decomp.me/scratch/7Aat2
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("config/../asm/us/st/top/nonmatchings/28C38", func_801B96A8);
 #else
 extern s32 D_80180A18;
 extern s32 D_801819BC;
 extern s32 D_801819C4;
-extern s16 D_801819D4[];
-extern s16 D_801819D6[]; 
+extern s32 D_801819D4[];
+extern s32 D_801819D6[];
 extern u8 D_801819F4[]; // Animation:
 extern u8 D_80181A04[]; // Animation:
 extern u8 D_80181A1C[]; // Animation:
@@ -281,30 +281,34 @@ extern u8 D_80181AA4[]; // Animation:
 extern u8 D_80181AB0[]; // Animation:
 extern u8 D_80181AC0[]; // Animation:
 
+#define NA_SE_VO_AXE_KNIGHT_THROW 0x766
+
 typedef enum {
     AXE_KNIGHT_INIT,
     AXE_KNIGHT_IDLE,
-    AXE_KNIGHT_2,
-    AXE_KNIGHT_3,
-    AXE_KNIGHT_4,
-    AXE_KNIGHT_5,
-    AXE_KNIGHT_6,
-    AXE_KNIGHT_7,
-    AXE_KNIGHT_8,
+    AXE_KNIGHT_WALKING_TOWARDS_PLAYER,
+    AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER,
+    AXE_KNIGHT_STANDING_THROW,
+    AXE_KNIGHT_DUCKING_THROW,
+    AXE_KNIGHT_CHARGING_ATTACK,
+    AXE_KNIGHT_ARCING_THROW,
+    AXE_KNIGHT_DYING,
 } BlueAxeKnightSteps;
 
 s32 func_801B0B78(const u8 frames[], Entity* entity);
+
+// unk7C is Shield status: 0 = off, 1 = on.
+
 // EntityBlueAxeKnight
 void func_801B96A8(Entity* self) {
     Entity* newEntity;
     s32 animStatus;
-    s16 temp_s2;
-    s32 temp_a0;
+    s16 temp;
     s8* hitbox;
     s32 i;
 
-    if ((self->hitPoints < 8) && ((u8) self->unk7C.S8.unk1 != 0)) {
-        self->unk7C.S8.unk1 = 0;
+    if ((self->hitPoints < 8) && (self->unk7C.U8.unk1 != 0)) {
+        self->unk7C.S8.unk1 = 0; // Shield OFF!
         self->animCurFrame += 0x17;
         newEntity = func_801B12B8(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
@@ -316,28 +320,27 @@ void func_801B96A8(Entity* self) {
                     newEntity->posX.i.hi -= 12;
                 }
                 newEntity->subId = 2;
-                newEntity->posY.i.hi -=  8 - (i * 8);
+                newEntity->posY.i.hi -= 8 - (i * 8);
             }
         }
     }
-    
+
     if (self->flags & 0x100) {
-        if (self->step != 8) {
+        if (self->step != AXE_KNIGHT_DYING) {
             func_801B6B0C(0x767);
             self->unk3C = 0;
             self->unk80.modeS16.unk0 = 0x41;
             self->zPriority -= 0x10;
-            func_801B1688(8);
+            func_801B1688(AXE_KNIGHT_DYING);
             if (func_801AD630() & 1) {
-                self->unk2E = 0x10;
+                self->unk2E = 16;
                 self->unk80.modeS16.unk0 = 0;
             } else {
                 self->unk2E = 0;
             }
-            
         }
     }
-    
+
     switch (self->step) {
     case AXE_KNIGHT_INIT:
         func_801B1758(&D_80180A18);
@@ -346,19 +349,19 @@ void func_801B96A8(Entity* self) {
         if (self->subId != 0) {
             self->palette += 2;
         }
-        self->unk7C.S8.unk1 = 1;
+        self->unk7C.S8.unk1 = 1; // Shield ON!
         self->unk80.modeS16.unk2 = 0x200;
         func_801AFD1C(0x2A, self, &self[1]);
         break;
-        
+
     case AXE_KNIGHT_IDLE:
         if (func_801B0E58(&D_801819C4) & 1) {
             self->facing = (func_801B0DB8() & 1) ^ 1;
-            func_801B1688(AXE_KNIGHT_2);
+            func_801B1688(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
         }
         break;
-        
-    case AXE_KNIGHT_2:
+
+    case AXE_KNIGHT_WALKING_TOWARDS_PLAYER:
         if (self->unk2E == 0) {
             if (self->facing == 0) {
                 self->accelerationX = -0x5000;
@@ -367,7 +370,7 @@ void func_801B96A8(Entity* self) {
             }
             self->unk2E++;
         }
-        
+
         if (self->unk7C.U8.unk1 != 0) {
             animStatus = func_801B0B78(D_801819F4, self);
         } else {
@@ -375,18 +378,18 @@ void func_801B96A8(Entity* self) {
         }
         if (!(animStatus & 0xFF)) {
             self->facing = (func_801B0DB8() & 1) ^ 1;
-            
+
             if (self->facing == 0) {
                 self->accelerationX = -0x5000;
             } else {
                 self->accelerationX = 0x5000;
             }
             if (func_801B0D48() < 96) {
-                func_801B1688(AXE_KNIGHT_3);
+                func_801B1688(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
                 self->unk7C.S8.unk0 = 1;
             }
         }
-        
+
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
             if (self->facing == 0) {
                 self->accelerationX -= 0x600;
@@ -398,15 +401,15 @@ void func_801B96A8(Entity* self) {
         } else {
             self->accelerationX += 0x600;
         }
-        
+
         if (func_801B10D0(&D_801819BC) & 0x60) {
             self->posX.val -= self->accelerationX;
             self->accelerationX = 0;
         }
         func_801B95C4();
         break;
-        
-    case AXE_KNIGHT_3:
+
+    case AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER:
         if (self->unk2E == 0) {
             if (self->facing == 0) {
                 self->accelerationX = 0x6000;
@@ -415,12 +418,12 @@ void func_801B96A8(Entity* self) {
             }
             self->unk2E++;
         }
-        if ((u8) self->unk7C.S8.unk1 != 0) {
+        if (self->unk7C.U8.unk1 != 0) {
             animStatus = func_801B0B78(D_801819F4, self);
         } else {
             animStatus = func_801B0B78(D_80181A4C, self);
         }
-        
+
         if (!(animStatus & 0xFF)) {
             self->facing = (func_801B0DB8() & 1) ^ 1;
             if (self->facing == 0) {
@@ -430,20 +433,20 @@ void func_801B96A8(Entity* self) {
             }
 
             if (func_801B0D48() >= 0x51) {
-                func_801B1688(AXE_KNIGHT_2);
+                func_801B1688(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             }
         }
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
             if (self->facing != 0) {
-                self->accelerationX  -= 0x400;
+                self->accelerationX -= 0x400;
             } else {
-                self->accelerationX  += 0x400;
+                self->accelerationX += 0x400;
             }
         } else if (self->facing != 0) {
-            self->accelerationX  += 0x400;
+            self->accelerationX += 0x400;
         } else {
-            self->accelerationX  -= 0x400;
+            self->accelerationX -= 0x400;
         }
         if (func_801B10D0(&D_801819BC) & 0x60) {
             self->posX.val -= self->accelerationX;
@@ -451,21 +454,21 @@ void func_801B96A8(Entity* self) {
         }
         func_801B95C4();
         break;
-        
-    case AXE_KNIGHT_4:
+
+    case AXE_KNIGHT_STANDING_THROW:
         if (self->unk7C.U8.unk1 != 0) {
             animStatus = func_801B0B78(D_80181A04, self);
         } else {
             animStatus = func_801B0B78(D_80181A80, self);
         }
-        
+
         if (!(animStatus & 0xFF)) {
-block_63:
+        label:
             if (func_801B0D48() < 89) {
-                func_801B1688(AXE_KNIGHT_3);
+                func_801B1688(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
                 self->unk7C.S8.unk0 = 1;
             } else {
-                func_801B1688(AXE_KNIGHT_2);
+                func_801B1688(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
@@ -477,14 +480,15 @@ block_63:
                 newEntity->facing = self->facing;
                 newEntity->posY.i.hi -= 12;
                 if (newEntity->facing != 0) {
-                    newEntity->posX.i.hi += 8;break;
-                } 
+                    newEntity->posX.i.hi += 8;
+                    break;
+                }
                 newEntity->posX.i.hi -= 8;
             }
         }
         break;
-        
-    case AXE_KNIGHT_5:
+
+    case AXE_KNIGHT_DUCKING_THROW:
         if (self->unk7C.U8.unk1 != 0) {
             animStatus = func_801B0B78(D_80181A1C, self);
         } else {
@@ -501,61 +505,61 @@ block_63:
                     newEntity->posY.i.hi += 12;
                     newEntity->subId = 1;
                     if (newEntity->facing != 0) {
-                        newEntity->posX.i.hi += 8;break;
+                        newEntity->posX.i.hi += 8;
+                        break;
                     }
                     newEntity->posX.i.hi -= 8;
                 }
             }
         } else {
-            goto block_63;
+            goto label;
         }
         break;
-        
-    case AXE_KNIGHT_6:
+
+    case AXE_KNIGHT_CHARGING_ATTACK:
         switch (self->unk2E) {
-        case 0:               
+        case 0:
             self->unk80.modeS16.unk0 = 0x20;
             self->animCurFrame = 4;
             self->unk2E++;
             break;
-            
-        case 1:               
+
+        case 1:
             if (self->unk80.modeS16.unk0 != 0) {
                 self->unk80.modeS16.unk0--;
             } else {
                 self->unk80.modeS16.unk0 = 0x40;
                 if (self->facing != 0) {
                     self->accelerationX = 0x20000 | 0x8000;
-                }else {
+                } else {
                     self->accelerationX = 0xFFFD0000 | 0x8000;
                 }
                 self->unk2E++;
-                
             }
             break;
-            
+
         case 2:
             if (self->unk7C.U8.unk1 != 0) {
                 func_801B0B78(D_80181A30, self);
             } else {
                 func_801B0B78(D_80181A98, self);
             }
-            
-            if ((self->unk80.modeS16.unk0 == 0) || (func_801B0D48() < 0x20)) {
-                func_801B6B0C(0x766);
+
+            if ((self->unk80.modeS16.unk0 == 0) || (func_801B0D48() < 32)) {
+                func_801B6B0C(NA_SE_VO_AXE_KNIGHT_THROW);
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->unk2E++;
             } else {
                 self->unk80.modeS16.unk0--;
             }
-            
+
             if (func_801B10D0(&D_801819BC) & 0x60) {
                 self->posX.val -= self->accelerationX;
                 self->accelerationX = 0;
             }
             break;
-            
+
         case 3:
             if (self->unk7C.U8.unk1 != 0) {
                 animStatus = func_801B0B78(D_80181A3C, self);
@@ -564,9 +568,9 @@ block_63:
             }
             if (!(animStatus & 0xFF)) {
                 self->facing = (func_801B0DB8() & 1) ^ 1;
-                goto block_63;
+                goto label;
             }
-            
+
             if (self->accelerationX != 0) {
                 if (self->accelerationX < 0) {
                     self->accelerationX += 0x4000;
@@ -574,14 +578,14 @@ block_63:
                     self->accelerationX -= 0x4000;
                 }
                 if (func_801B10D0(&D_801819BC) & 0x60) {
-                self->posX.val -= self->accelerationX;
-                self->accelerationX = 0;
+                    self->posX.val -= self->accelerationX;
+                    self->accelerationX = 0;
                 }
             }
         }
         break;
-        
-    case AXE_KNIGHT_7:
+
+    case AXE_KNIGHT_ARCING_THROW:
         if (self->unk7C.U8.unk1 != 0) {
             animStatus = func_801B0B78(D_80181A04, self);
         } else {
@@ -589,22 +593,24 @@ block_63:
         }
         if (!(animStatus & 0xFF)) {
             if (func_801B0D48() > 88) {
-                func_801B1688(AXE_KNIGHT_2);
-                self->unk7C.S8.unk0 = 0;break;
+                func_801B1688(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
+                self->unk7C.S8.unk0 = 0;
+                break;
             } else {
-                func_801B1688(AXE_KNIGHT_3);
-                self->unk7C.S8.unk0 = 1;break;
+                func_801B1688(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
+                self->unk7C.S8.unk0 = 1;
+                break;
             }
         }
-        
+
         if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
-            func_801B6B0C(0x766);
+            func_801B6B0C(NA_SE_VO_AXE_KNIGHT_THROW);
             func_801B6B0C(0x6C7);
             newEntity = func_801B12B8(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 func_801AFCA8(0x29, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->posY.i.hi -= 0x28;
+                newEntity->posY.i.hi -= 40;
                 newEntity->subId = 2;
                 if (newEntity->facing != 0) {
                     newEntity->posX.i.hi += 16;
@@ -614,19 +620,18 @@ block_63:
             }
         }
         break;
-        
-    case AXE_KNIGHT_8:
+
+    case AXE_KNIGHT_DYING:
         if (self->unk80.modeS16.unk0 != 0) {
-            temp_s2 = self->unk80.modeS16.unk0 - 1;
-            self->unk80.modeS16.unk0 = temp_s2;
-            if (!(temp_s2 & 7)) {
+            temp = --self->unk80.modeS16.unk0;
+            if (!(self->unk80.modeS16.unk0 & 7)) {
                 newEntity = func_801B12B8(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     func_801AFD1C(2, self, newEntity);
-                    temp_a0 = ((s32) (temp_s2 << 0x10) >> 0x13) * 2;
+                    temp >>= 3;
                     newEntity->subId = 2;
-                    newEntity->posX.i.hi += D_801819D4[temp_a0];
-                    newEntity->posY.i.hi += D_801819D6[temp_a0];
+                    newEntity->posX.i.hi += D_801819D4[temp];
+                    newEntity->posY.i.hi += D_801819D6[temp];
                 }
             }
         }
