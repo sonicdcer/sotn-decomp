@@ -145,7 +145,7 @@ INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801BD268);
 
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801BDA34);
 
-INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801BDAE4);
+INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", EntityLesserDemon);
 
 INCLUDE_ASM("config/../asm/us/st/lib/nonmatchings/2DED0", func_801BED48);
 
