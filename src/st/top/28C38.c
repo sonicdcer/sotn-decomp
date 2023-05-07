@@ -259,7 +259,7 @@ INCLUDE_ASM("config/../asm/us/st/top/nonmatchings/28C38", func_801B95C4);
 
 // assembler skips a nop
 // matching in decompme: https://decomp.me/scratch/7Aat2
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/us/st/top/nonmatchings/28C38", func_801B96A8);
 #else
 extern s32 D_80180A18;
