@@ -2,7 +2,7 @@
 
 // INCLUDE_ASM("asm/us/st/cen/nonmatchings/1B274", EntityAbsorbOrb);
 
-extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+
 extern u16 D_8008701E[];
 extern u16 D_801811C8[];
 extern u16 D_801811D8[];
