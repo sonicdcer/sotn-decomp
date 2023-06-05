@@ -1,19 +1,11 @@
 #include "cen.h"
 
-// INCLUDE_ASM("asm/us/st/cen/nonmatchings/1B274", EntityAbsorbOrb);
-
-
-extern u16 D_8008701E[];
-extern u16 D_801811C8[];
-extern u16 D_801811D8[];
-extern u8 D_80181238;
-extern u16 D_80180410[]; // Init
-
-// The white flying orbs of energy that Alucard summons as part of the Soul Steal spell
+// The white flying orbs of energy that Alucard summons as part of the Soul
+// Steal spell
 void EntityAbsorbOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
-    u16* temp_d, temp_e;
+    u16 *temp_d, temp_e;
     s32 temp_a, temp_b;
     u16 angle;
 
@@ -45,7 +37,7 @@ void EntityAbsorbOrb(Entity* self) {
         self->ext.absorbOrb.unk7E = 0;
         self->unk3C = 0;
         break;
-        
+
     case 1:
         self->ext.absorbOrb.unk82++;
         if (self->ext.absorbOrb.unk82 == 16) {
@@ -68,15 +60,11 @@ void EntityAbsorbOrb(Entity* self) {
         if (self->ext.absorbOrb.unk80 < 0x800) {
             self->ext.absorbOrb.unk80 += 4;
         }
-        self->ext.absorbOrb.angle = func_80194E44(
-            self->ext.absorbOrb.unk7E,
-            self->ext.absorbOrb.angle,
-            func_80194DC4(self, &PLAYER)
-        );
-        func_80194D08(
-            self->ext.absorbOrb.angle & 0xFFFF,
-            self->ext.absorbOrb.unk80
-        );
+        self->ext.absorbOrb.angle =
+            func_80194E44(self->ext.absorbOrb.unk7E, self->ext.absorbOrb.angle,
+                          func_80194DC4(self, &PLAYER));
+        func_80194D08(self->ext.absorbOrb.angle & 0xFFFF,
+                      self->ext.absorbOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
         prim = &g_PrimBuf[self->firstPolygonIndex];
         func_80194394(&D_80181238, self);
@@ -97,7 +85,6 @@ void EntityAbsorbOrb(Entity* self) {
         break;
     }
 }
-
 
 void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
