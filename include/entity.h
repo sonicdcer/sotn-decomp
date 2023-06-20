@@ -217,6 +217,18 @@ typedef struct {
     /* 0xA6 */ s16 unkA6;
 } ET_GurkhaSword;
 
+typedef struct ET_Dracula {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ char pad_8E[0x2];
+    /* 0x90 */ char pad_90[0x8];
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ char pad_9A[0x2];
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ char pad_9E[0xE];
+    /* 0xAC */ struct Primitive* unkAC;
+} ET_Dracula;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
@@ -228,5 +240,6 @@ typedef union {
     /* 0x7C */ ET_Familiar fam;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
+    ET_Dracula dracula;
     /* 0x7C */ char stub[0x40];
 } Ext;
