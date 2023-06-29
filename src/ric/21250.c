@@ -1,7 +1,64 @@
 #include "ric.h"
 
-// decompiling func_8015FB84 first is recommended to discover struct
-INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015D250);
+s32 func_8015D1D0(s16, u8);                         /* extern */
+s16 func_8015FB84(SubweaponDef*, s32, s32);                        /* extern */
+extern AnimationFrame D_801555E8;
+extern AnimationFrame D_80155638;
+extern u16 PLAYER_step;
+extern s16 PLAYER_unk2E;
+extern s16 g_Player_D_80072F14;
+extern s32 g_Player_padPressed;
+extern s16 g_Player_unk46;
+extern u16 g_Player_unk72;
+
+s32 func_8015D250(void) {
+    SubweaponDef sp10;
+    s16 subweapon_Id;
+    
+    if (!(g_Player_padPressed & 0x1000)) {
+        return 1;
+    }
+    subweapon_Id = func_8015FB84(&sp10, 0, 0);
+    if(subweapon_Id <= 0){
+        return 1;
+    }
+    if (sp10.unkB == 0) {
+        return 4;
+    }
+    if (func_8015D1D0(subweapon_Id, sp10.unk6) < 0) {
+        return 2;
+    }
+    if ((func_8015FB84(&sp10, 0, 1) << 0x10) <= 0) {
+        return 3;
+    }
+    if (g_Player_unk72 != 0){
+        return 5;
+    }
+    func_801606BC(g_CurrentEntity, sp10.unkB, 0);
+    g_Player_D_80072F14 = 4;
+    switch (PLAYER_step) {
+    case 25:
+        PLAYER_step = 0;
+        func_801606BC(g_CurrentEntity, 0U, 0);
+        func_8015C920(&D_801555E8);
+        break;
+    case 0:
+    case 1:
+    case 2:
+        PLAYER_step = 0;
+        func_8015C920(&D_801555E8);
+        break;
+    case 3:
+    case 4:
+        PLAYER_step = 4;
+        func_8015C920(&D_80155638);
+        break;
+    }
+    g_Player_unk46 = 3;
+    PLAYER_unk2E = 0x42;
+    g_Player_D_80072F14 = 4;
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015D3CC);
 

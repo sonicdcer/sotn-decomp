@@ -40,7 +40,8 @@ segments:
       - [0x1A7A8, .rodata, 1FCD0]
       - [0x1A7C0, .rodata, 202A8]
       - [0x1A800, .rodata, 20920]
-      - [0x1A80C, rodata] # .rodata, 21250
+      - [0x1A80C, .rodata, 21250] # .rodata, 21250
+      - [0x1A874, rodata] # .rodata, 21250
       - [0x1A904, .rodata, 22380]
       - [0x1A908, rodata]
       - [0x1A9D0, .rodata, 26C84]
