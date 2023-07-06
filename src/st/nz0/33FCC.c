@@ -264,11 +264,11 @@ void EntitySlogra(Entity* self) {
     // Jump thing
     
     if ((g_pads[1].tapped & PAD_CROSS) && (func_801BCF74(&D_8018106C))) { // if he's on the ground
-        self->ext.GS_Props.reserved = 40;
+        self->ext.GS_Props.reserved = 30;
     }
 
     if (self->ext.GS_Props.reserved > 0) {
-        self->accelerationY = -0x040000;
+        self->accelerationY = -0x060000;
         if (1/*self->step != SLOGRA_SPEAR_POKE*/) {
             MoveEntity();
         }
@@ -399,7 +399,10 @@ void EntitySlogra(Entity* self) {
         if (*(s32*)&self->animFrameIdx == 4) {
             func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
-        func_801BCF74(&D_8018106C);
+        //func_801BCF74(&D_8018106C);
+        if (func_801BCF74(&D_8018106C)) {
+            self->accelerationX = 0;
+        }
         break;
 
     case SLOGRA_SPEAR_FIRE:
@@ -439,6 +442,9 @@ void EntitySlogra(Entity* self) {
                 SetStep(SLOGRA_IDLE);
             }
             break;
+        }
+        if (func_801BCF74(&D_8018106C)) {
+            self->accelerationX = 0;
         }
         break;
 
@@ -543,6 +549,9 @@ void EntitySlogra(Entity* self) {
         }
         if (*(s32*)&self->animFrameIdx == 7) {
             func_801C29B0(NA_SE_EN_SLOGRA_BEAK_ATTACK);
+        }
+        if (func_801BCF74(&D_8018106C)) {
+            self->accelerationX = 0;
         }
         break;
 
