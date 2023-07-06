@@ -217,7 +217,63 @@ void EntitySlogra(Entity* self) {
 
     self->ext.GS_Props.pickupFlag = 0;
 
-    FntPrint("beri_flag %x\n", g_BossFlag);
+    /*
+    
+    typedef enum {
+    SLOGRA_INIT,
+    SLOGRA_FLOOR_ALIGN,
+    SLOGRA_IDLE,
+    SLOGRA_TAUNT_WITH_SPEAR,
+    SLOGRA_SPEAR_POKE,
+    SLOGRA_SPEAR_FIRE,
+    SLOGRA_ATTACK,
+    SLOGRA_KNOCKBACK = 8,
+    SLOGRA_WALKING_WITH_SPEAR,
+    SLOGRA_TAUNT_WITHOUT_SPEAR,
+    SLOGRA_WALKING_WITHOUT_SPEAR,
+    SLOGRA_LOSE_SPEAR,
+    SLOGRA_GAIBON_COMBO_ATTACK,
+    SLOGRA_DYING = 16,
+    SLOGRA_DEBUG = 255,
+} SlograSteps;
+
+    */
+
+    //FntPrint("beri_flag %x\n", g_BossFlag);
+    if (g_pads[1].tapped & PAD_SQUARE) {
+        SetStep(SLOGRA_SPEAR_POKE);
+    } else if (g_pads[1].tapped & PAD_TRIANGLE) {
+        SetStep(SLOGRA_SPEAR_FIRE);
+    } else if (g_pads[1].tapped & PAD_CIRCLE) {
+        SetStep(SLOGRA_ATTACK);
+    }
+
+    // Jumping thing
+    if ((self->step == SLOGRA_WALKING_WITH_SPEAR) && !(g_pads[1].pressed & (PAD_LEFT | PAD_RIGHT))) {
+        SetStep(SLOGRA_IDLE);
+    }
+
+    if (g_pads[1].tapped & PAD_LEFT) {
+        self->facing = 0;
+        SetStep(SLOGRA_WALKING_WITH_SPEAR);
+    } else if (g_pads[1].tapped & PAD_RIGHT) {
+        self->facing = 1;
+        SetStep(SLOGRA_WALKING_WITH_SPEAR);
+    }
+
+    // Jump thing
+    
+    if ((g_pads[1].tapped & PAD_CROSS) && (func_801BCF74(&D_8018106C))) { // if he's on the ground
+        self->ext.GS_Props.reserved = 40;
+    }
+
+    if (self->ext.GS_Props.reserved > 0) {
+        self->accelerationY = -0x040000;
+        if (1/*self->step != SLOGRA_SPEAR_POKE*/) {
+            MoveEntity();
+        }
+        self->ext.GS_Props.reserved--;
+    }
 
     if (self->step >= SLOGRA_TAUNT_WITH_SPEAR) {
         if ((self->hitFlags & 3) && (self->step != SLOGRA_KNOCKBACK)) {
@@ -260,12 +316,16 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_IDLE:
         AnimateEntity(D_80181080, self);
+        /*
         if (self->hitFlags != 0) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
         }
         if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
-            SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            //SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
+        */
+        self->accelerationX = 0;
+        func_801BCF74(&D_8018106C);
         break;
 
     case SLOGRA_TAUNT_WITH_SPEAR:
@@ -276,7 +336,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_WALKING_WITH_SPEAR:
         if (self->step_s == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            //self->facing = (GetPlayerSide() & 1) ^ 1;
             if (self->ext.GS_Props.attackMode != 0) { // shoot projectile ?
                 self->ext.GS_Props.flag = 1;
             } else {
@@ -286,12 +346,12 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
         AnimateEntity(D_80181074, self);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        //self->facing = (GetPlayerSide() & 1) ^ 1;
 
-        if (self->facing != self->ext.GS_Props.flag) {
-            self->accelerationX = 0xC000;
+        if (self->facing) {
+            self->accelerationX = 0x18000;
         } else {
-            self->accelerationX = -0xC000;
+            self->accelerationX = -0x18000;
         }
         func_801BCF74(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
@@ -312,6 +372,7 @@ void EntitySlogra(Entity* self) {
                 }
             }
         }
+        /*
         if (!(Random() % 64)) {
             SetStep(SLOGRA_TAUNT_WITH_SPEAR);
         }
@@ -324,6 +385,7 @@ void EntitySlogra(Entity* self) {
 
             self->ext.GS_Props.attackMode ^= 1;
         }
+        */
         break;
 
     case SLOGRA_SPEAR_POKE:
@@ -332,17 +394,18 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
         if (AnimateEntity(D_801810B4, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            SetStep(SLOGRA_IDLE);
         }
         if (*(s32*)&self->animFrameIdx == 4) {
             func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
+        func_801BCF74(&D_8018106C);
         break;
 
     case SLOGRA_SPEAR_FIRE:
         switch (self->step_s) {
         case SLOGRA_FIRE_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            //self->facing = (GetPlayerSide() & 1) ^ 1;
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
@@ -373,7 +436,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_FIRE_END: // go back to standing position
             if (AnimateEntity(D_801810A8, self) == 0) {
-                SetStep(SLOGRA_WALKING_WITH_SPEAR);
+                SetStep(SLOGRA_IDLE);
             }
             break;
         }
@@ -398,7 +461,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_KNOCKBACK_ARC:
-            if (0x18000 > self->accelerationY) {
+            if (self->accelerationY < 0x18000) {
                 self->ext.GS_Props.pickupFlag = 1;
             }
             entityOnFloor = EntitySlograSpecialCollision(D_8018105C);
@@ -408,8 +471,8 @@ void EntitySlogra(Entity* self) {
             } else {
                 animation = &D_801810D4;
             }
-            if (AnimateEntity(animation, self) == 0 && entityOnFloor & 1) {
-                SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            if ((AnimateEntity(animation, self) == 0) && (entityOnFloor & 1)) {
+                SetStep(SLOGRA_IDLE);
                 if (self->ext.GS_Props.nearDeath != 0) {
                     SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
                 }
@@ -431,7 +494,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_TAUNT_WITHOUT_SPEAR:
         if (AnimateEntity(D_80181108, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
+            SetStep(SLOGRA_IDLE);
         }
         break;
 
@@ -564,7 +627,7 @@ void EntitySlogra(Entity* self) {
             return;
         }
         break;
-
+    /*
     case SLOGRA_DEBUG:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
@@ -586,6 +649,7 @@ void EntitySlogra(Entity* self) {
             self->step_s = 0;
         }
         break;
+    */
     }
     hitbox = &D_801811B8[self->animCurFrame][D_80181178];
     hitbox--;

@@ -121,7 +121,9 @@ typedef struct ET_EquipItemDrop {
 } ET_EquipItemDrop;
 
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    ///* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ s16 jumpTimer;
+    /* 0x7E */ s16 reserved;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 attackMode;
