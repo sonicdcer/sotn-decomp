@@ -86,7 +86,32 @@ void EntityTableWithGlobe(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDF64, func_060DDF64);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE178, func_060DE178);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE2B0, func_060DE2B0);
+
+//INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE2B0, func_060DE2B0);
+
+s16 Random(void);
+Entity* AllocEntity(Entity*, Entity*);
+// SAT func_060DE2B0
+// PSX func_801B3B78
+void func_060DE2B0(void) {
+    Entity* entity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
+
+    for (i = 0; i < 6; i++) {
+        // iVar2 = (*AllocEntity)(DAT_060de33c, DAT_060de338);
+        entity = AllocEntity(g_Entities, &g_Entities[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
+            entity->params = 2;
+            entity->unk85 = 6 - i; // s8
+            entity->unk80 = temp_s3; // s16
+            entity->unk84 = temp_s4; // s8
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE348, func_060DE348);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE6CC, func_060DE6CC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE970, func_060DE970);
