@@ -1,0 +1,37 @@
+options:
+  platform:     psx
+  basename:     borbo8
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/BOSS/RBO8/RBO8.BIN
+  asm_path:     asm/us/boss/rbo8
+  asset_path:   assets/boss/rbo8
+  src_path:     src/boss/rbo8
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.borbo8.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.borbo8.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.borbo8.txt
+  disasm_unknown: no
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+segments:
+  - name: borbo8
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+    - [0x0, data]
+    - [0x151E8, c]
+    
+   # - [0x151E8, code]
+   # - [0x41368, rodata]
+   # - [0x41854, c]
+  - [0x268EC, bss]
+  - [0x275B0]
