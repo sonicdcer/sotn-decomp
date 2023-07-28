@@ -201,7 +201,7 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
-rbo8: borbo8_dirs $(BUILD_DIR)/RBO8.BIN
+rbo8: borbo8_dirs $(BUILD_DIR)/RBO8.BIN $(BUILD_DIR)/F_RBO8.BIN
 $(BUILD_DIR)/RBO8.BIN: $(BUILD_DIR)/borbo8.elf
 	$(OBJCOPY) -O binary $< $@
 
@@ -215,7 +215,7 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 bo%_dirs:
-	$(foreach dir,$(ASM_DIR)/boss/bo/$* $(ASM_DIR)/boss/bo/$*/data $(SRC_DIR)/boss/bo/$* $(ASSETS_DIR)/boss/bo/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
