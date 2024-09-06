@@ -1,3 +1,5 @@
+I hereby agree to license all of my contributions to the main sotn-decomp repository under the proposed AGPLv3 license, as outlined in PR #1565
+
 # Castlevania: Symphony of the Night Decompilation
 
 A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1, Sony PlayStation Portable and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
